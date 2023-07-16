@@ -1,5 +1,5 @@
 const express = require('express')
-const { createQueryFeilds, findAllWithAttributeIncExc, findAllWithOp, findAllWithorders, findAllWithFinders, findAndCreateWithGetterSetter } = require('../controller/sequelizeMethods')
+const { createQueryFeilds, findAllWithAttributeIncExc, findAllWithOp, findAllWithorders, findAllWithFinders, findAndCreateWithGetterSetter, validation } = require('../controller/sequelizeMethods')
 const router = express.Router()
 
 router.route('/createQueryFeilds').get(createQueryFeilds)
@@ -13,6 +13,8 @@ router.route('/findAllWithorders').get(findAllWithorders)
 router.route('/findAllWithFinders').get(findAllWithFinders)
 
 router.route('/findAndCreateWithGetterSetter').get(findAndCreateWithGetterSetter)
+
+router.route('/validation').get(validation)
 
 
 

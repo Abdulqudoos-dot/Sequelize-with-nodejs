@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
         firstName: {
             type: DataTypes.STRING,
-            allowNull: false,
+            defaultValue: 'default',
+            unique: true,
             get() {
                 const rawValue = this.getDataValue('firstName')
                 return rawValue ? "Mr " + rawValue.toUpperCase() : null
@@ -14,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         lastName: {
             type: DataTypes.STRING,
-            allowNull: false,
+            defaultValue: 'default'
         },
         fullName: {
             type: DataTypes.VIRTUAL,

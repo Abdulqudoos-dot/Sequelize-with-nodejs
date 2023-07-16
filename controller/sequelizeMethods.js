@@ -172,4 +172,17 @@ exports.findAndCreateWithGetterSetter = async (req, res, next) => {
 }
 
 
+// validation
 
+exports.validation = async (req, res, next) => {
+    try {
+        const users = await User.create({ firstName: 'umer', lastName: 'liaqat' }
+        )
+        // const users = await User.findAll(
+        //     {}
+        // )
+        res.status(200).json(users)
+    } catch (err) {
+        next(err)
+    }
+}

@@ -4,11 +4,28 @@ module.exports = (sequelize, DataTypes) => {
         firstName: {
             type: DataTypes.STRING,
             allowNull: false,
+            get() {
+                const rawValue = this.getDataValue('firstName')
+                return rawValue ? "Mr " + rawValue.toUpperCase() : null
+            },
+            set(value) {
+                const Name = this.setDataValue('firstName', value + "Pakistani ")
+            }
         },
         lastName: {
             type: DataTypes.STRING,
             allowNull: false,
-        }
+        },
+        fullName: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                return `${this.firstName} ${this.lastName}`
+            },
+            set() {
+                throw new Error('Do not try to set the `fullName` value!')
+            }
+        },
+
     }, {
         tableName: 'users'
     })

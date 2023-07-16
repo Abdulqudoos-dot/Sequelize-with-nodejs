@@ -11,6 +11,6 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         tableName: 'contact'
     })
-
+    return Contact
     console.log(`contact model : ${Contact === sequelize.models.Contact}`.bgYellow)
 }

@@ -7,11 +7,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         lastName: {
             type: DataTypes.STRING,
-            defaultValue: 'Babar Ali'
+            allowNull: false,
         }
     }, {
         tableName: 'users'
     })
 
+
+    return User
     console.log(`user model : ${User === sequelize.models.User}`.bgYellow)
 }

@@ -4,6 +4,7 @@ const { Sequelize, DataTypes } = require('sequelize')
 const sequelize = new Sequelize('employeeDb', 'root', 'A03062404012z///+++///', {
     host: 'localhost',
     dialect: 'mysql',
+    logging: false
 });
 
 try {
@@ -19,7 +20,7 @@ db.User = require('./User')(sequelize, DataTypes)
 db.Contact = require('./Contact')(sequelize, DataTypes)
 
 db.sequelize.sync({
-    force: true
+    force: false
 })
 
 

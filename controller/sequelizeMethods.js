@@ -1,6 +1,8 @@
+const errorResponse = require('../utils/errorResponse')
 const db = require('../model')
-const { Op } = require("sequelize");
+const { Op, QueryTypes } = require("sequelize");
 const User = db.User
+const Contact = db.Contact
 const sequelize = db.sequelize
 // create query with feild option that will allow insert data in db that is defined in fields array
 exports.createQueryFeilds = async (req, res, next) => {
@@ -182,6 +184,175 @@ exports.validation = async (req, res, next) => {
         //     {}
         // )
         res.status(200).json(users)
+    } catch (err) {
+        next(err)
+    }
+}
+
+// raw queries
+
+exports.rawQueries = async (req, res, next) => {
+    try {
+        // const users = await sequelize.query('SELECT * FROM users', {
+        //     type: QueryTypes.SELECT,
+        //     model: User,
+        //     mapToModel: true, //getter setter will work 
+        //     plain: true, //only one record will show
+        //     // raw: false
+
+        // })
+        // this is use to fech data with condition with ?
+        // const users = await sequelize.query('SELECT * FROM users WHERE id= ?', {
+        //     replacements: [
+        //         2
+        //     ],
+        //     type: QueryTypes.SELECT
+
+        // })
+        // this is use to fech data with condition with id
+
+        // const users = await sequelize.query('SELECT * FROM users WHERE id = :id', {
+        //     replacements: {
+        //         id: 2
+        //     },
+        //     type: QueryTypes.SELECT
+
+        // })
+
+
+        // // this is use to fech data with condition with in method
+
+
+        // const users = await sequelize.query('SELECT * FROM users WHERE id IN(:id)', {
+        //     replacements: {
+        //         id: [1, 2, 3]
+        //     },
+        //     type: QueryTypes.SELECT
+
+        // })
+
+
+
+        // this is use to fech data with condition with $ and bind method
+
+        const users = await sequelize.query('SELECT * FROM users WHERE id = $id', {
+            bind: { id: 2 },
+            type: QueryTypes.SELECT
+
+        })
+
+
+        res.status(200).json(users)
+    } catch (err) {
+        next(err)
+    }
+}
+
+
+
+// one to one assocciation
+
+exports.oneToOne = async (req, res, next) => {
+    try {
+        // making a relationship between user and contact
+        // const user = await User.create({ firstName: 'ali', lastName: 'ahmer' }
+        // )
+        // if (user && user.id) {
+
+        //     await Contact.create({
+        //         permanentAddress: 'chack no 30 jb',
+        //         currentAddress: 'faisalabad',
+        //         userId: user.id
+        //     })
+        // }
+
+        // getting a relationship betwween user and contact
+        const user = await User.findAll(
+            {
+                attributes: ['firstName', 'lastName'],
+                include: {
+                    model: Contact,
+                    attributes: ['permanentAddress', 'currentAddress', 'userId']
+                }
+            }
+        )
+        res.status(201).json(user)
+    } catch (err) {
+        next(err)
+    }
+}
+
+
+// one to many
+
+exports.oneToMany = async (req, res, next) => {
+    try {
+        // making a relationship between user and contact
+        // const user = await User.create({ firstName: 'ali', lastName: 'ahmad' }
+        // )
+        // if (user && user.id) {
+
+        // const contact = await Contact.create({
+        //     permanentAddress: 'chack no 5 jb',
+        //     currentAddress: 'faisalabad',
+        //     userId: 3
+        // })
+        // }
+
+        // getting a relationship betwween user and contact
+        const user = await User.findAll(
+            {
+                attributes: ['firstName', 'lastName'],
+                include: {
+                    model: Contact,
+                    attributes: ['permanentAddress', 'currentAddress', 'userId']
+                }
+            }
+        )
+        res.status(201).json(user)
+    } catch (err) {
+        next(err)
+    }
+}
+
+
+// many to many
+
+exports.manyToMany = async (req, res, next) => {
+    try {
+        // making a relationship between user and contact
+        // const user = await User.create({ firstName: 'tasneem', lastName: 'abbas' }
+        // )
+        // if (user && user.id) {
+
+        //     const contact = await Contact.create({
+        //         permanentAddress: 'chack no 5 jb',
+        //         currentAddress: 'faisalabad',
+        //         userId: user.id
+        //     })
+        // }
+
+        // getting a relationship betwween user and contact
+        // const user = await User.findAll(
+        //     {
+        //         attributes: ['firstName', 'lastName'],
+        //         include: {
+        //             model: Contact,
+        //             attributes: ['permanentAddress', 'currentAddress']
+        //         }
+        //     }
+        // )
+
+        const contact = await Contact.findAll(
+            {
+                attributes: ['permanentAddress', 'currentAddress'],
+                include: {
+                    model: User,
+                    attributes: ['firstName', 'lastName']
+                }
+            }
+        )
+        res.status(201).json(contact)
     } catch (err) {
         next(err)
     }

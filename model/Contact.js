@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 'Faisalabad'
         }
     }, {
-        tableName: 'contact'
+        tableName: 'contacts'
     })
     return Contact
     console.log(`contact model : ${Contact === sequelize.models.Contact}`.bgYellow)

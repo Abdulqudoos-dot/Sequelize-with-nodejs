@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
                 throw new Error('Do not try to set the `fullName` value!')
             }
         },
+        deleted: {
+            type: DataTypes.TINYINT(1),
+            defaultValue: 0,
+        }
 
     }, {
         tableName: 'users'

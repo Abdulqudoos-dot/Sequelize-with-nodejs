@@ -357,3 +357,25 @@ exports.manyToMany = async (req, res, next) => {
         next(err)
     }
 }
+
+// paranoid
+
+exports.paranoid = async (req, res, next) => {
+    try {
+        // to drop query for check paranoid delete
+        const users = await User.destroy({ where: { id: 1 } })
+
+        // query for add user
+
+        // const users = await User.create({ firstName: 'paranoid2', lastName: 'example2' }
+        // )
+
+        //query for find user
+        // const users = await User.findAll(
+        //     {}
+        // )
+        res.status(200).json(users)
+    } catch (err) {
+        next(err)
+    }
+}

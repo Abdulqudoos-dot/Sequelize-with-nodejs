@@ -18,18 +18,20 @@ db.Sequelize = Sequelize
 db.sequelize = sequelize
 db.User = require('./User')(sequelize, DataTypes)
 db.Contact = require('./Contact')(sequelize, DataTypes)
-db.UserContact = require('./UserContact')(sequelize, DataTypes, db.User, db.Contact)
+// db.UserContact = require('./UserContact')(sequelize, DataTypes, db.User, db.Contact)
 
 
-
+// assocciate one user to one contact
 // db.User.hasOne(db.Contact); // db.Contact HasOne db.Contact
 // db.Contact.belongsTo(db.User); // db.Contact BelongsTo db.Contact
 
+// associate one user t many contacts
 // db.User.hasMany(db.Contact); // db.Contact HasMany db.Contact
 // db.Contact.belongsTo(db.User); // db.Contact BelongsTo db.Contact
 
-db.User.belongsToMany(db.Contact, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
-db.Contact.belongsToMany(db.User, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
+// associate many user t many contacts
+// db.User.belongsToMany(db.Contact, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
+// db.Contact.belongsToMany(db.User, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
 
 
 

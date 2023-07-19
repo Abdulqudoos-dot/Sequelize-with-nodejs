@@ -418,3 +418,25 @@ exports.lazyEagerLoading = async (req, res, next) => {
         next(err)
     }
 }
+
+
+// advance eager loading
+
+exports.advEagerLod = async (req, res, next) => {
+    try {
+        //query for find user
+        const users = await User.findAll(
+            {
+                where:{id:2},
+                include:{
+                    model:Contact,
+                    require:false,
+                    right:true
+                }
+            }
+        )
+        res.status(200).json(users)
+    } catch (err) {
+        next(err)
+    }
+}

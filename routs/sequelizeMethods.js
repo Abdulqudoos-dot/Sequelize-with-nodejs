@@ -1,5 +1,5 @@
 const express = require('express')
-const { createQueryFeilds, findAllWithAttributeIncExc, findAllWithOp, findAllWithorders, findAllWithFinders, findAndCreateWithGetterSetter, validation, rawQueries, oneToOne, oneToMany, manyToMany, paranoid } = require('../controller/sequelizeMethods')
+const { createQueryFeilds, findAllWithAttributeIncExc, findAllWithOp, findAllWithorders, findAllWithFinders, findAndCreateWithGetterSetter, validation, rawQueries, oneToOne, oneToMany, manyToMany, paranoid, lazyEagerLoading } = require('../controller/sequelizeMethods')
 const router = express.Router()
 
 router.route('/createQueryFeilds').get(createQueryFeilds)
@@ -25,6 +25,9 @@ router.route('/oneToMany').get(oneToMany)
 router.route('/manyToMany').get(manyToMany)
 
 router.route('/paranoid').get(paranoid)
+
+router.route('/lazyEagerLoading').get(lazyEagerLoading)
+
 
 
 

@@ -7,10 +7,13 @@ module.exports = (sequelize, DataTypes) => {
         currentAddress: {
             type: DataTypes.STRING,
             defaultValue: 'Faisalabad'
+        },
+        userId: {
+            type: DataTypes.INTEGER
         }
     }, {
         tableName: 'contacts'
     })
     return Contact
-    console.log(`contact model : ${Contact === sequelize.models.Contact}`.bgYellow)
+    // console.log(`contact model : ${Contact === sequelize.models.Contact}`.bgYellow)
 }

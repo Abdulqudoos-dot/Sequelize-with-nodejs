@@ -379,3 +379,42 @@ exports.paranoid = async (req, res, next) => {
         next(err)
     }
 }
+
+
+
+// lazyEagerLoading
+exports.lazyEagerLoading = async (req, res, next) => {
+    try {
+        // making a relationship between user and contact
+        // const user = await User.create({ firstName: 'ali2', lastName: 'ahmad 2' }
+        // )
+        // if (user && user.id) {
+
+        //     const contact = await Contact.create({
+        //         permanentAddress: 'chack no 5 jb',
+        //         currentAddress: 'faisalabad',
+        //         userId: user.id
+        //     })
+        // }
+
+        // // query for find user with eager loading
+        // const user = await User.findAll(
+        //     {
+        //         include: {
+        //             model: Contact,
+        //             attributes: ['permanentAddress']
+        //         }
+        //     }
+        // )
+
+
+          // query for find user with lazy loading
+        const user = await User.findOne({
+            where:{id:1}
+        })
+        const contact = await user.getContacts()
+        res.status(200).json({user,contact})
+    } catch (err) {
+        next(err)
+    }
+}

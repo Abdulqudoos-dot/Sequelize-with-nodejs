@@ -25,10 +25,6 @@ module.exports = (sequelize, DataTypes) => {
             set() {
                 throw new Error('Do not try to set the `fullName` value!')
             }
-        },
-        deleted: {
-            type: DataTypes.TINYINT(1),
-            defaultValue: 0,
         }
 
     }, {

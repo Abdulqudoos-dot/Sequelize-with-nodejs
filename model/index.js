@@ -18,7 +18,7 @@ db.Sequelize = Sequelize
 db.sequelize = sequelize
 db.User = require('./User')(sequelize, DataTypes)
 db.Contact = require('./Contact')(sequelize, DataTypes)
-// db.UserContact = require('./UserContact')(sequelize, DataTypes, db.User, db.Contact)
+db.UserContact = require('./UserContact')(sequelize, DataTypes, db.User, db.Contact)
 
 
 // assocciate one user to one contact
@@ -26,14 +26,31 @@ db.Contact = require('./Contact')(sequelize, DataTypes)
 // db.Contact.belongsTo(db.User); // db.Contact BelongsTo db.Contact
 
 // // associate one user t many contacts
-db.User.hasMany(db.Contact); // db.Contact HasMany db.Contact
-db.contactUser = db.Contact.belongsTo(db.User, { as: 'user' }); // db.Contact BelongsTo db.Contact
+// db.User.hasMany(db.Contact); // db.Contact HasMany db.Contact
+// db.contactUser = db.Contact.belongsTo(db.User, { as: 'user' }); // db.Contact BelongsTo db.Contact
 
-// associate many user t many contacts
+// associate many user to many contacts
+// this is many to many 
 // db.User.belongsToMany(db.Contact, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
 // db.Contact.belongsToMany(db.User, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
 
 
+// this is also many to many assocciation
+// db.User.hasMany(db.UserContact); // db.Contact HasMany db.Contact
+// db.UserContact.belongsTo(db.User); // db.
+// db.Contact.hasMany(db.UserContact); // db.Contact HasMany db.Contact
+// db.UserContact.belongsTo(db.Contact);
+
+
+// this is super many to many assocciation
+
+db.User.belongsToMany(db.Contact, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
+db.Contact.belongsToMany(db.User, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
+
+db.User.hasMany(db.UserContact); // db.Contact HasMany db.Contact
+db.UserContact.belongsTo(db.User); // db.
+db.Contact.hasMany(db.UserContact); // db.Contact HasMany db.Contact
+db.UserContact.belongsTo(db.Contact);
 
 db.sequelize.sync({
     force: false

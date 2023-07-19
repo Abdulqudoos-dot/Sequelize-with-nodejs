@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Contact = sequelize.define('Contact', {
+    const Contact = sequelize.define('contact', {
         permanentAddress: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -7,9 +7,6 @@ module.exports = (sequelize, DataTypes) => {
         currentAddress: {
             type: DataTypes.STRING,
             defaultValue: 'Faisalabad'
-        },
-        userId: {
-            type: DataTypes.INTEGER
         }
     }, {
         tableName: 'contacts'

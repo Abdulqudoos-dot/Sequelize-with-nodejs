@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes, User, Contact) => {
                 key: 'id'
             }
         },
+        selfGranted: DataTypes.BOOLEAN
 
     }, {
         timestamps: false,

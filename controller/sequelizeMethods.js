@@ -500,3 +500,83 @@ exports.creatWithAsso = async (req, res, next) => {
         next(err)
     }
 }
+
+
+exports.M_n_Asso = async (req, res, next) => {
+    try {
+
+        // creating data in all of three tables
+
+        // const data = User.create({
+        //     firstName: 'abdullah7',
+        //     lastName: 'jutt7',
+        //     contacts: [{
+        //         permanentAddress: 'abdullah town',
+        //         currentAddress: 'faisalabad',
+        //         UserContact: {
+        //             selfGranted: false
+        //         }
+        //     }]
+        // }, {
+        //     include: Contact
+        // })
+
+        // // making user for many to many
+        // const user = await User.create({
+        //     firstName: 'name1',
+        //     lastName: 'name1',
+        // })
+
+        // // making contact for many to many
+        // const contact = await Contact.create({
+        //     permanentAddress: 'chack no 57 jb',
+        //     currentAddress: 'faisalabad',
+        // })
+
+        // entring data in third model wich is made up by many to many assocciaion
+        // await user.addContact(contact, { through: { selfGranted: true } })
+        // query for find user
+
+        // if we have super manty to many realation ship then we can access nested tebles and we can access through tables 
+
+        // access contact aand userContact table by user
+        // const data = await User.findAll({
+        //     // include: {
+        //     //     model: Contact
+        //     // },
+        //     include: {
+        //         model: db.UserContact
+        //     }
+        // }
+        // )
+
+        // access user aand userContact table by contact
+        // const data = await Contact.findAll({
+        //     include: {
+        //         model: User
+        //     },
+        //     // include: {
+        //     //     model: db.UserContact
+        //     // }
+        // }
+        // )
+
+
+        // access user aand contact  table by userContact
+        const data = await db.User.findAll({
+            // include: {
+            //     model: User
+            // },
+            include: {
+                model: Contact
+            }
+        }
+        )
+
+
+
+        res.status(200).json({ data })
+    } catch (err) {
+        next(err)
+    }
+}

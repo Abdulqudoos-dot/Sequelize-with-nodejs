@@ -4,7 +4,7 @@ const { Sequelize, DataTypes } = require('sequelize')
 const sequelize = new Sequelize('employeeDb', 'root', 'A03062404012z///+++///', {
     host: 'localhost',
     dialect: 'mysql',
-    logging: true
+    logging: false
 });
 
 try {
@@ -27,7 +27,7 @@ db.Contact = require('./Contact')(sequelize, DataTypes)
 
 // // associate one user t many contacts
 db.User.hasMany(db.Contact); // db.Contact HasMany db.Contact
-db.Contact.belongsTo(db.User); // db.Contact BelongsTo db.Contact
+db.contactUser = db.Contact.belongsTo(db.User, { as: 'user' }); // db.Contact BelongsTo db.Contact
 
 // associate many user t many contacts
 // db.User.belongsToMany(db.Contact, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact

@@ -408,12 +408,12 @@ exports.lazyEagerLoading = async (req, res, next) => {
         // )
 
 
-          // query for find user with lazy loading
+        // query for find user with lazy loading
         const user = await User.findOne({
-            where:{id:1}
+            where: { id: 1 }
         })
         const contact = await user.getContacts()
-        res.status(200).json({user,contact})
+        res.status(200).json({ user, contact })
     } catch (err) {
         next(err)
     }
@@ -427,15 +427,75 @@ exports.advEagerLod = async (req, res, next) => {
         //query for find user
         const users = await User.findAll(
             {
-                where:{id:2},
-                include:{
-                    model:Contact,
-                    require:false,
-                    right:true
+                where: { id: 2 },
+                include: {
+                    model: Contact,
+                    require: false,
+                    right: true
                 }
             }
         )
         res.status(200).json(users)
+    } catch (err) {
+        next(err)
+    }
+}
+
+// advance eager loading
+
+exports.creatWithAsso = async (req, res, next) => {
+    try {
+
+        // // to creat one data in two assocciated models with create with assocciate
+
+        // const data = await Contact.create({
+        //     permanentAddress: 'chack no 5 jb',
+        //     currentAddress: 'faisalabad',
+        //     user: {
+        //         firstName: 'create2',
+        //         lastName: 'assocciation2'
+        //     }
+        // }, {
+        //     include: db.contactUser
+        // })
+
+
+        // to creat bulk data in two assocciated models with create with assocciate
+
+        // const data = await Contact.bulkCreate([{
+        //     permanentAddress: 'chack no 6 jb',
+        //     currentAddress: 'faisalabad6',
+        //     user: {
+        //         firstName: 'create3',
+        //         lastName: 'assocciation3'
+        //     }
+        // },
+        // {
+        //     permanentAddress: 'chack no 7 jb',
+        //     currentAddress: 'faisalabad7',
+        //     user: {
+        //         firstName: 'create4',
+        //         lastName: 'assocciation4'
+        //     }
+        // }], {
+        //     include: db.contactUser
+        // })
+
+
+
+
+        //query for find user
+        const data = await User.findAll({
+            attributes: ['id', 'firstName', 'lastName'],
+            include: {
+                model: Contact,
+                attributes: ['permanentAddress', 'currentAddress', 'userId'],
+                require: false,
+                right: true
+            }
+        }
+        )
+        res.status(200).json(data)
     } catch (err) {
         next(err)
     }

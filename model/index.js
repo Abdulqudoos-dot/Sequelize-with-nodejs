@@ -18,7 +18,11 @@ db.Sequelize = Sequelize
 db.sequelize = sequelize
 db.User = require('./User')(sequelize, DataTypes)
 db.Contact = require('./Contact')(sequelize, DataTypes)
+db.Player = require('./Player')(sequelize, DataTypes)
+
 db.UserContact = require('./UserContact')(sequelize, DataTypes, db.User, db.Contact)
+db.PlayerUserContact = require('./PlayerUserContact')(sequelize, DataTypes, db.Player, db.UserContact)
+
 
 
 // assocciate one user to one contact
@@ -44,13 +48,33 @@ db.UserContact = require('./UserContact')(sequelize, DataTypes, db.User, db.Cont
 
 // this is super many to many assocciation
 
+// db.User.belongsToMany(db.Contact, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
+// db.Contact.belongsToMany(db.User, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
+
+// db.User.hasMany(db.UserContact); // db.Contact HasMany db.Contact
+// db.UserContact.belongsTo(db.User); // db.
+// db.Contact.hasMany(db.UserContact); // db.Contact HasMany db.Contact
+// db.UserContact.belongsTo(db.Contact);
+
+
+// this is  many to many to many assocciations
+
 db.User.belongsToMany(db.Contact, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
 db.Contact.belongsToMany(db.User, { through: db.UserContact }); // db.Contact belongsToMany with db.Contact
-
 db.User.hasMany(db.UserContact); // db.Contact HasMany db.Contact
 db.UserContact.belongsTo(db.User); // db.
 db.Contact.hasMany(db.UserContact); // db.Contact HasMany db.Contact
 db.UserContact.belongsTo(db.Contact);
+
+db.Player.belongsToMany(db.UserContact, { through: db.PlayerUserContact }); // db.Contact belongsToMany with db.Contact
+db.UserContact.belongsToMany(db.Player, { through: db.PlayerUserContact }); // db.Contact belongsToMany with db.Contact
+
+db.Player.hasMany(db.PlayerUserContact); // db.Contact HasMany db.Contact
+db.PlayerUserContact.belongsTo(db.Player); // db.
+db.UserContact.hasMany(db.PlayerUserContact); // db.Contact HasMany db.Contact
+db.PlayerUserContact.belongsTo(db.UserContact);
+
+
 
 db.sequelize.sync({
     force: false

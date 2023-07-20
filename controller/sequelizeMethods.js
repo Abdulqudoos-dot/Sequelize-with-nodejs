@@ -580,3 +580,81 @@ exports.M_n_Asso = async (req, res, next) => {
         next(err)
     }
 }
+
+
+
+// mmany to many to many eager loading
+
+exports.m__2_m_2_m = async (req, res, next) => {
+    try {
+        //query for bulk creat in many to mant any  
+        // await User.bulkCreate([
+        //     {
+        //         firstName: 'name1',
+        //         lastName: 'name1',
+        //     },
+        //     {
+        //         firstName: 'name2',
+        //         lastName: 'name2',
+        //     },
+        //     {
+        //         firstName: 'name3',
+        //         lastName: 'name3',
+        //     },
+        //     {
+        //         firstName: 'name4',
+        //         lastName: 'name4',
+        //     },
+        // ])
+
+        // await db.Player.bulkCreate([
+        //     { name: 's0me0ne' },
+        //     { name: 'empty' },
+        //     { name: 'greenhead' },
+        //     { name: 'not_spock' },
+        //     { name: 'bowl_of_petunias' }
+        // ]);
+        // await Contact.bulkCreate([
+        //     { name: 'The Big Clash' },
+        //     { name: 'Winter Showdown' },
+        //     { name: 'Summer Beatdown' }
+        // ]);
+        // await db.UserContact.bulkCreate([
+        //     { contactId: 1, userId: 1 },   // this GameTeam will get id 1
+        //     { contactId: 1, userId: 2 },   // this GameTeam will get id 2
+        //     { contactId: 2, userId: 1 },   // this GameTeam will get id 3
+        //     { contactId: 2, userId: 3 },   // this GameTeam will get id 4
+        //     { contactId: 3, userId: 2 },   // this GameTeam will get id 5
+        //     { contactId: 3, userId: 3 }    // this GameTeam will get id 6
+        // ]);
+
+        // await db.PlayerUserContact.bulkCreate([
+        //     // In 'Winter Showdown' (i.e. GameTeamIds 3 and 4):
+        //     { playerId: 1, usercontactId: 3 },   // s0me0ne played for The Martians
+        //     { playerId: 3, usercontactId: 3 },   // greenhead played for The Martians
+        //     { playerId: 4, usercontactId: 4 },   // not_spock played for The Plutonians
+        //     { playerId: 5, usercontactId: 4 }    // bowl_of_petunias played for The Plutonians
+        // ]);
+
+        // find in mant to many to many
+        const user = await User.findOne({
+            where: {
+                id: 1
+            },
+            include: {
+                model: db.UserContact,
+                include: [
+                    {
+                        model: db.Player,
+                        through: { attributes: [] } // Hide unwanted `PlayerGameTeam` nested object from results
+                    },
+                    Contact
+                ]
+            }
+        });
+        res.status(200).json({ user })
+    } catch (err) {
+        next(err)
+        console.log(err)
+    }
+}

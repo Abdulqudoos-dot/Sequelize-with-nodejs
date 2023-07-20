@@ -584,7 +584,7 @@ exports.M_n_Asso = async (req, res, next) => {
 
 
 
-// mmany to many to many eager loading
+// mmany to many to many
 
 exports.m__2_m_2_m = async (req, res, next) => {
     try {
@@ -787,4 +787,19 @@ exports.transaction = async (req, res, next) => {
 
     //     }
     // }
+}
+
+
+// hooks 
+
+exports.hooks = async (req, res, next) => {
+    try {
+        const user = await User.create({
+            firstName: 'kumar2',
+            lastName: 'manoj'
+        })
+        res.status(200).json({ user })
+    } catch (err) {
+        next(err)
+    }
 }

@@ -441,7 +441,7 @@ exports.advEagerLod = async (req, res, next) => {
     }
 }
 
-// advance eager loading
+// creating with assocciation
 
 exports.creatWithAsso = async (req, res, next) => {
     try {
@@ -502,6 +502,7 @@ exports.creatWithAsso = async (req, res, next) => {
 }
 
 
+// many to mant assocciation
 exports.M_n_Asso = async (req, res, next) => {
     try {
 
@@ -661,7 +662,7 @@ exports.m__2_m_2_m = async (req, res, next) => {
 
 
 
-// advance eager loading
+// scopes
 
 exports.scope = async (req, res, next) => {
     try {
@@ -686,11 +687,104 @@ exports.scope = async (req, res, next) => {
         })
         const users = await User.scope('includeContact').findAll()
 
-
-
-
         res.status(200).json(users)
     } catch (err) {
         next(err)
     }
+}
+
+
+// transaction to rollback
+
+exports.transaction = async (req, res, next) => {
+
+
+
+    // manageable transaction
+    // let user = await User.create({
+    //     firstName: "ali9",
+    //     lastName: "ahmed8"
+    // })
+    try {
+        const result = await db.sequelize.transaction(async (t) => {
+
+
+            // assocciation entry
+            const contact = await Contact.create({
+                permanentAddress: 'chack no 29 jb north',
+                currentAddress: 'chack no 30 jb north',
+                userId: null,
+                users: {
+                    firstName: "ali9",
+                    lastName: "ahmed8"
+                },
+                include: [db.contactUser]
+            }
+            )
+            res.status(200).json({ result })
+
+            // bulk entry
+            // const contact = await Contact.create([{
+            //     permanentAddress: 'chack no 29 jb north',
+            //     currentAddress: 'chack no 30 jb north',
+            //     userId: null
+            // }, {
+            //     permanentAddress: 'chack no 29 jb north',
+            //     currentAddress: 'chack no 30 jb north',
+            //     userId: user.id
+            // }],
+            //     { transaction: t }
+            // )
+
+
+
+            //single entry 
+            // const contact = await Contact.create({
+            //     permanentAddress: 'chack no 29 jb north',
+            //     currentAddress: 'chack no 30 jb north',
+            //     userId: null
+            // },
+            //     { transaction: t }
+            // )
+            return contact
+        })
+        console.log("result" + ":" + result)
+    } catch (err) {
+        next(err)
+
+    }
+
+
+
+
+    // unmanageable transaction
+
+    // const t = db.sequelize.transaction()
+    // let user = await User.create({
+    //     firstName: "ali6",
+    //     lastName: "ahmed6"
+    // })
+    // if (user && user.id) {
+    //     try {
+    //         await Contact.create({
+    //             permanentAddress: 'chack no 29 jb north',
+    //             currentAddress: 'chack no 30 jb north',
+    //             userId: null,
+    //         })
+    //             ; (await t).commit
+    //         console.log('commited')
+    //         res.status(200).json({ user })
+
+    //     } catch (err) {
+    //         (await t).rollback
+    //         console.log('roll back')
+    //         await User.destroy({
+    //             where: {
+    //                 id: user.id
+    //             }
+    //         })
+    //         next(err)
+
+    //     }
+    // }
 }

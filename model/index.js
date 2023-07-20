@@ -102,7 +102,7 @@ db.contactUser = db.Contact.belongsTo(db.User, { as: 'user' }); // db.Contact Be
 
 
 db.sequelize.sync({
-    force: false
+    force: true
 })
 
 

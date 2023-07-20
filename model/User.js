@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
 
     }, {
         tableName: 'users',
+        underscored: true
         // hooks: {
         //     beforeValidate: (user, options) => {
         //         user.lastName = 'name before validate'
@@ -56,13 +57,13 @@ module.exports = (sequelize, DataTypes) => {
 
     // add hook with out addhook function
 
-    User.beforeValidate(async (user, options) => {
-        user.lastName = 'name before validate'
-    })
+    // User.beforeValidate(async (user, options) => {
+    //     user.lastName = 'name before validate'
+    // })
 
-    User.afterValidate(async (user, options) => {
-        user.firstName = 'name after validate'
-    })
+    // User.afterValidate(async (user, options) => {
+    //     user.firstName = 'name after validate'
+    // })
 
     return User
     console.log(`user model : ${User === sequelize.models.User}`.bgYellow)

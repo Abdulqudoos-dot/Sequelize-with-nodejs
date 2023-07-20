@@ -1,5 +1,5 @@
 const express = require('express')
-const { createQueryFeilds, findAllWithAttributeIncExc, findAllWithOp, findAllWithorders, findAllWithFinders, findAndCreateWithGetterSetter, validation, rawQueries, oneToOne, oneToMany, manyToMany, paranoid, lazyEagerLoading, advEagerLod, creatWithAsso, M_n_Asso, m__2_m_2_m } = require('../controller/sequelizeMethods')
+const { createQueryFeilds, findAllWithAttributeIncExc, findAllWithOp, findAllWithorders, findAllWithFinders, findAndCreateWithGetterSetter, validation, rawQueries, oneToOne, oneToMany, manyToMany, paranoid, lazyEagerLoading, advEagerLod, creatWithAsso, M_n_Asso, m__2_m_2_m, scope } = require('../controller/sequelizeMethods')
 const router = express.Router()
 
 router.route('/createQueryFeilds').get(createQueryFeilds)
@@ -35,6 +35,9 @@ router.route('/creatWithAsso').get(creatWithAsso)
 router.route('/M_n_Asso').get(M_n_Asso)
 
 router.route('/m__2_m_2_m').get(m__2_m_2_m)
+
+router.route('/scope').get(scope)
+
 
 
 

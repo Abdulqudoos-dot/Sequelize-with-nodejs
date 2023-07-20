@@ -658,3 +658,39 @@ exports.m__2_m_2_m = async (req, res, next) => {
         console.log(err)
     }
 }
+
+
+
+// advance eager loading
+
+exports.scope = async (req, res, next) => {
+    try {
+        //query for find user without scope
+        // const users = await User.findAll(
+        //     {
+        //         where: { id: 2 }
+        //     }
+        // )
+
+        // with scope
+        // definnig scope for reuse of queries
+
+        User.addScope('findWithId', {
+            where: { id: 3 }
+        })
+
+        User.addScope('includeContact', {
+            include: {
+                model: Contact
+            }
+        })
+        const users = await User.scope('includeContact').findAll()
+
+
+
+
+        res.status(200).json(users)
+    } catch (err) {
+        next(err)
+    }
+}
